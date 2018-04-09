@@ -137,33 +137,6 @@ block('*')(
     return ret;
   }),
 
-  // Changes in ctx.mods
-  def()(function() {
-    var ret;
-    var extend = this.extend;
-
-    var getMods = function(mods) { return extend({}, mods); };
-
-    var ctx = this.ctx;
-    var mods = ctx.mods;
-
-    var before = getMods(mods);
-    ret = applyNext();
-    var after = getMods(mods);
-
-    if (JSON.stringify(before) !== JSON.stringify(after)) {
-        console.warn(
-          '\nBEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: ' +
-          JSON.stringify(ctx) +
-          '\nold value of ctx.mods was: ' + JSON.stringify(before) +
-          '\nnew value of ctx.mods was: ' + JSON.stringify(after) +
-          '\nNotice that you should change this.mods instead of this.ctx.mods in templates'
-        );
-    }
-
-    return ret;
-  }),
-
   mode('check-attrs')(function() {
     var ctx = this.ctx;
     var attrs = this.check;
@@ -322,8 +295,6 @@ block('*')(
   }),
 
   def()(function(node, ctx) {
-    console.log(ctx);
-
     if (ctx.mods) {
       var mods = ctx.mods;
 
